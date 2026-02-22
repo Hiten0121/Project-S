@@ -39,7 +39,7 @@ function finalizeReset() {
     const code = document.getElementById('verificationCode').value;
     if (code.length === 6) {
         alert("Password updated successfully! Redirecting to login...");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     } else {
         alert("Invalid verification code.");
     }
