@@ -270,7 +270,7 @@
 async function checkUser() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (!session) {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     }
 }
 checkUser();
@@ -282,7 +282,7 @@ async function handleLogout() {
     if (confirm("Are you sure you want to logout?")) {
         await _supabase.auth.signOut();
         localStorage.removeItem('username');
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     }
 }
 
