@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <form id="signupForm" class="login-form">
+            <h2>Create Account</h2>
+            <p>Join us today! It only takes a minute.</p>
+            
+            <div class="input-group">
+                <input type="text" id="username" required>
+                <label>Username</label>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label>Email Address</label>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label>Password</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="confirmPassword" required>
+                <label>Confirm Password</label>
+                <span id="message" class="error-text"></span>
+            </div>
+            
+            <button type="submit" class="login-btn">Register</button>
+            
+            <div class="footer-links">
+                <span>Already have an account? <a href="login.html">Login</a></span>
+            </div>
+        </form>
+    </div>
+    <script src="js/signup_script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/db-config.js"></script>
+</body>
+</html>

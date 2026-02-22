@@ -1,0 +1,302 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <div class="nav-item"><a href="chat.html"><span>💬</span></a></div>
+                </div>
+
+                <div class="nav-center">
+                    <div class="nav-item active"><span>🏠</span></div>
+                    <div class="nav-item"><span>🎬</span></div>
+                    <div class="nav-item"><span>🔍</span></div>
+                    <div class="nav-item"><span>🔥</span></div>
+                </div>
+
+                <div class="nav-right">
+                    <button onclick="handleLogout()" class="logout-btn" title="Logout">
+                        🚪
+                    </button>
+                    <div class="profile-pic" id="profileIcon"><span>A</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="spacer"></div>
+
+        <main class="dashboard-layout">
+            
+            <section class="feed-section">
+                <div class="stories-container">
+                    <div class="story-circle"><span>📸</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                </div>
+
+                <div class="feed" id="feed-container">
+                    <article class="post">
+                        <div class="post-header">
+                            <div class="user-info">
+                                <div class="mini-profile"></div>
+                                <strong class="post-user">creative_coder</strong>
+                            </div>
+                            <span class="options">•••</span>
+                        </div>
+                        
+                        <div class="post-image">
+                            <p style="color: #ccc;">Post Content Area</p>
+                        </div>
+
+                        <div class="post-actions">
+                            <span class="action-icon like-btn">❤️</span>
+                            <span class="action-icon">💬</span>
+                            <span class="action-icon">✈️</span>
+                        </div>
+
+                        <div class="post-details">
+                            <p><strong>creative_coder</strong> Building a responsive dashboard with CSS Grid and Flexbox! 🚀 #webdev #coding</p>
+                            <span class="post-time">2 HOURS AGO</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <aside class="suggestions-sidebar">
+                <div class="current-user">
+                    <div class="mini-profile large" id="userInitial"></div>
+                    <div class="user-meta">
+                        <strong id="display-username">Admin</strong>
+                        <p id="display-full-name">Full Name</p>
+                    </div>
+                    <button class="switch-link">Switch</button>
+                </div>
+
+                <div class="suggestions-header">
+                    <span>Suggestions For You</span>
+                    <button class="see-all">See All</button>
+                </div>
+
+                <div class="suggestion-user">
+                    <div class="mini-profile"></div>
+                    <div class="user-meta">
+                        <strong>travel_bug</strong>
+                        <p>Followed by user_a + 5 others</p>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+
+                <div class="suggestion-user">
+                    <div class="mini-profile"></div>
+                    <div class="user-meta">
+                        <strong>tech_guru</strong>
+                        <p>Suggested for you</p>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+
+                <footer class="sidebar-footer">
+                    <p>© 2026 GEMINI SOCIAL FROM GOOGLE</p>
+                </footer>
+            </aside>
+
+        </main>
+    </div>
+
+    <script src="js/dashboard_script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/signup_script.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Quick styles for the Modal & FAB */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .modal-body input, .modal-body textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        .fab-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #0095f6;
+            color: white;
+            border-radius: 50%;
+            font-size: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,149,246,0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .fab-btn:hover { transform: scale(1.1); }
+        .upload-submit-btn {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <div class="nav-left">
+                    <div class="nav-item"><a href="chat.html" style="text-decoration: none;"><span>💬</span></a></div>
+                </div>
+
+                <div class="nav-center">
+                    <div class="nav-item active"><span>🏠</span></div>
+                    <div class="nav-item"><span>🎬</span></div>
+                    <div class="nav-item"><span>🔍</span></div>
+                    <div class="nav-item"><span>🔥</span></div>
+                </div>
+
+                <div class="nav-right">
+                    <button onclick="handleLogout()" class="logout-btn" title="Logout" style="background:none; border:none; cursor:pointer; font-size: 1.2rem; margin-right: 15px;">
+                        🚪
+                    </button>
+                    <div class="profile-pic" id="profileIcon"><span>A</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="spacer" style="height: 70px;"></div>
+
+        <main class="dashboard-layout">
+            
+            <section class="feed-section">
+                <div class="stories-container">
+                    <div class="story-circle"><span>📸</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                    <div class="story-circle"><span>👤</span></div>
+                </div>
+
+                <div class="feed" id="feed-container">
+                    <p style="text-align: center; color: #888;">Loading your feed...</p>
+                </div>
+            </section>
+
+            <aside class="suggestions-sidebar">
+                <div class="current-user">
+                    <div class="mini-profile large" id="userInitial" style="background: #efefef; display: flex; align-items: center; justify-content: center; font-weight: bold;"></div>
+                    <div class="user-meta">
+                        <strong id="display-username">Admin</strong>
+                        <p id="display-full-name">Gemini User</p>
+                    </div>
+                    <button class="switch-link" style="color: #0095f6; border: none; background: none; font-weight: bold; cursor: pointer;">Switch</button>
+                </div>
+
+                <div class="suggestions-header" style="display: flex; justify-content: space-between; margin: 20px 0 10px; color: #8e8e8e; font-weight: bold; font-size: 0.9rem;">
+                    <span>Suggestions For You</span>
+                    <button class="see-all" style="border: none; background: none; font-size: 0.8rem; cursor: pointer;">See All</button>
+                </div>
+
+                <div id="suggestions-list">
+                    <div class="suggestion-user" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center;">
+                            <div class="mini-profile" style="width: 32px; height: 32px; border-radius: 50%; background: #ccc; margin-right: 10px;"></div>
+                            <div class="user-meta">
+                                <strong style="font-size: 0.9rem;">travel_bug</strong>
+                                <p style="font-size: 0.75rem; color: #8e8e8e;">Suggested for you</p>
+                            </div>
+                        </div>
+                        <button class="follow-btn" style="color: #0095f6; border: none; background: none; font-size: 0.85rem; font-weight: bold; cursor: pointer;">Follow</button>
+                    </div>
+                </div>
+
+                <footer class="sidebar-footer" style="margin-top: 30px; font-size: 0.7rem; color: #c7c7c7;">
+                    <p>© 2026 GEMINI SOCIAL FROM GOOGLE</p>
+                </footer>
+            </aside>
+        </main>
+    </div>
+
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #efefef; padding-bottom: 10px; margin-bottom: 15px;">
+                <h3 style="margin: 0;">Create New Post</h3>
+                <span style="cursor: pointer; font-size: 1.5rem;" onclick="closePostModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="postImageInput" accept="image/*">
+                <textarea id="postCaption" rows="4" placeholder="Write a caption..."></textarea>
+                <button id="uploadBtn" class="upload-submit-btn" onclick="handlePostUpload()">Share Post</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="fab-btn" onclick="openPostModal()" title="Add Post">+</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script src="js/db-config.js"></script>
+    
+    <script src="js/dashboard_script.js"></script>
+
+    <script>
+        // Simple UI Modal Controls (since they aren't in your dashboard_script.js yet)
+        function openPostModal() { document.getElementById('postModal').style.display = 'block'; }
+        function closePostModal() { document.getElementById('postModal').style.display = 'none'; }
+        
+        // Close modal if user clicks outside of the box
+        window.onclick = function(event) {
+            let modal = document.getElementById('postModal');
+            if (event.target == modal) { closePostModal(); }
+        }
+    </script>
+</body>
+</html>

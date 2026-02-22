@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Gemini Social</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Dropdown styling for Search */
+        .results-dropdown {
+            position: absolute;
+            background: white;
+            width: calc(100% - 30px);
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            z-index: 1000;
+            display: none;
+            left: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .search-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-item:hover { background: #fafafa; }
+        .search-item img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+
+        /* Active Chat Container */
+        .active-chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-header-active {
+            padding: 15px;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+        }
+        
+        /* Message Request Bar */
+        #request-actions {
+            background: #fafafa;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 15px;
+            text-align: center;
+            display: none; /* Controlled by JS */
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+        .message.sent {
+            align-self: flex-end;
+            background-color: #0095f6;
+            color: white;
+        }
+        .message.received {
+            align-self: flex-start;
+            background-color: #efefef;
+            color: black;
+        }
+
+        .chat-input-wrapper {
+            padding: 15px;
+            border-top: 1px solid #dbdbdb;
+            display: flex;
+            gap: 10px;
+            background: #fff;
+        }
+        .chat-input-wrapper input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #dbdbdb;
+            outline: none;
+        }
+        .send-btn {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .send-btn:disabled { color: #b2dffc; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <div class="nav-left"><a href="dashboard.html" style="text-decoration:none; font-size: 1.2rem;">&larr;</a></div>
+                <div class="nav-center"><strong>Messages</strong></div>
+                <div class="nav-right">
+                    <div class="profile-pic" id="profileIcon" style="cursor: pointer;"><span>?</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="spacer"></div>
+
+        <main class="chat-layout">
+            <aside class="chat-sidebar">
+                <div class="chat-search-container" style="position: relative; padding: 15px;">
+                    <input type="text" id="userSearch" placeholder="Search usernames..." autocomplete="off" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #dbdbdb;">
+                    <div id="search-results" class="results-dropdown"></div>
+                </div>
+
+                <div class="chat-tabs">
+                    <button id="tab-primary" class="tab-btn active" onclick="switchTab('primary')">Primary</button>
+                    <button id="tab-requests" class="tab-btn" onclick="switchTab('requests')">Requests</button>
+                </div>
+
+                <div class="user-list" id="userList">
+                    </div>
+            </aside>
+
+            <section class="chat-window" id="chatWindow">
+                <div id="empty-state" class="chat-empty-state">
+                    <div class="icon-circle" style="font-size: 3rem; margin-bottom: 15px;">💬</div>
+                    <h2>Your Messages</h2>
+                    <p>Send private photos and messages to a friend.</p>
+                </div>
+
+                <div id="active-chat" class="active-chat-container" style="display: none;">
+                    <div class="chat-header-active">
+                        <img id="chat-header-img" src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <strong id="chat-header-name">Username</strong>
+                    </div>
+                    
+                    <div id="request-actions">
+                        </div>
+
+                    <div id="chat-messages">
+                        </div>
+
+                    <form class="chat-input-wrapper" id="chatForm" onsubmit="event.preventDefault(); sendMessage();">
+                        <input type="text" id="messageInput" placeholder="Message..." autocomplete="off">
+                        <button type="submit" class="send-btn" id="sendBtn">Send</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/db-config.js"></script>
+    <script src="js/chat_script.js"></script>
+
+    <script>
+        /**
+         * Visual Tab Switching
+         * Note: The actual data filtering happens in chat_script.js via loadSidebar()
+         */
+        function switchTab(type) {
+            // UI Toggle
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            if(type === 'primary') {
+                document.getElementById('tab-primary').classList.add('active');
+            } else {
+                document.getElementById('tab-requests').classList.add('active');
+            }
+            
+            // Call the function in chat_script.js to load data
+            if (typeof window.handleTabSwitch === 'function') {
+                window.handleTabSwitch(type);
+            }
+        }
+    </script>
+</body>
+</html>

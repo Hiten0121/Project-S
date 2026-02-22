@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <form id="loginForm" class="login-form">
+            <h2>Welcome Back</h2>
+            <p>Please enter your details</p>
+
+            <div class="input-group">
+                <input type="text" id="identifier" required autocomplete="username">
+                <label>Username or Email</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password">
+                <label>Password</label>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+            <div class="footer-links">
+                <a href="forget_pass.html">Forget Password?</a>
+                <span>Don't have an account? <a href="signup.html">Sign up</a></span>
+            </div>
+        </form>
+    </div>
+    <script src="js/login_script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/db-config.js"></script>
+    <!-- <script>
+        window.onload = function() {
+            const savedUser = localStorage.getItem('username');
+            if (savedUser) {
+                // This targets the 🧍‍♀️ icon and replaces it with the first letter of the name
+                const profileIcon = document.querySelector('.nav-right .profile-pic span');
+                if (profileIcon) {
+                    profileIcon.innerText = savedUser[0].toUpperCase();
+                    profileIcon.style.fontWeight = "bold";
+                    profileIcon.style.color = "#764ba2";
+                }
+                console.log("Welcome, " + savedUser);
+            }
+        };
+    </script> -->
+</body>
+</html>

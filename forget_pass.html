@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div id="forgotPasswordBox">
+            <h2>Reset Password</h2>
+            <p id="stepDescription">Enter your email to find your account.</p>
+
+            <div id="step1" class="step">
+                <div class="input-group">
+                    <input type="email" id="resetEmail" required>
+                    <label>Email Address</label>
+                </div>
+                <button onclick="sendRecoveryEmail()" class="login-btn">Find Usernames</button>
+            </div>
+
+            <div id="step2" class="step" style="display:none;">
+                <label class="select-label">Select account to recover:</label>
+                <select id="usernameSelect" class="custom-select">
+                    </select>
+                <button onclick="requestVerificationCode()" class="login-btn">Send Code to Email</button>
+            </div>
+
+            <div id="step3" class="step" style="display:none;">
+                <div class="input-group">
+                    <input type="text" id="verificationCode" placeholder="Enter 6-digit code" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="newPassword" required>
+                    <label>New Password</label>
+                </div>
+                <button onclick="finalizeReset()" class="login-btn">Update Password</button>
+            </div>
+            
+            <div class="footer-links">
+                <a href="login.html">Back to Login</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/signup_script.js"></script>
+</body>
+</html>
