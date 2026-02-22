@@ -1,0 +1,481 @@
+/* =========================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+:root {
+    --primary-purple: #764ba2;
+    --primary-blue: #667eea;
+    --bg-color: #fafafa;
+    --white: #ffffff;
+    --border-color: #dbdbdb;
+    --text-main: #333;
+    --text-muted: #8e8e8e;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* =========================================
+   2. LOGIN, SIGNUP & FORGOT PASS STYLES
+   (Centered full-screen forms)
+   ========================================= */
+.auth-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.login-container h2 { margin-bottom: 10px; color: #333; }
+.login-container p { margin-bottom: 30px; color: #666; font-size: 0.9rem; }
+
+/* Input floating label effect */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    outline: none;
+    background: transparent;
+    transition: 0.3s;
+}
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: #999;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+    top: -15px;
+    font-size: 0.8rem;
+    color: var(--primary-purple);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-purple);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover { background: #5a3782; }
+
+.footer-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.error-text {
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    font-weight: bold;
+    color: #ff4d4d;
+}
+
+/* =========================================
+   3. DASHBOARD TOP NAVIGATION
+   ========================================= */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-wrapper {
+    width: 95%;
+    max-width: 935px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left, .nav-right { flex: 1; display: flex; }
+.nav-right { justify-content: flex-end; }
+.nav-center { display: flex; gap: 30px; flex: 2; justify-content: center; }
+
+.nav-item { font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
+.nav-item:hover { transform: scale(1.1); }
+.nav-item.active { color: var(--primary-purple); }
+
+.profile-pic {
+    background: #efefef;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.spacer { height: 80px; }
+
+/* =========================================
+   4. DASHBOARD TWO-COLUMN LAYOUT
+   ========================================= */
+.dashboard-layout {
+    display: flex;
+    justify-content: center;
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 32px;
+}
+
+/* Feed Column */
+.feed-section {
+    flex: 1;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Suggestions Sidebar */
+.suggestions-sidebar {
+    width: 320px;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+/* =========================================
+   5. FEED, POSTS & STORIES
+   ========================================= */
+.stories-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.story-circle {
+    min-width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #e1306c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eee;
+    font-size: 1.2rem;
+}
+
+.post {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.post-header {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mini-profile { width: 32px; height: 32px; background: #ddd; border-radius: 50%; margin-right: 10px; }
+.mini-profile.large { width: 44px; height: 44px; }
+.user-info { display: flex; align-items: center; }
+
+.post-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-actions { padding: 12px; font-size: 1.4rem; display: flex; gap: 15px; }
+.post-details { padding: 0 12px 12px; font-size: 0.9rem; }
+.post-time { color: var(--text-muted); font-size: 0.7rem; display: block; margin-top: 5px; }
+
+/* =========================================
+   6. SIDEBAR COMPONENTS
+   ========================================= */
+.current-user, .suggestion-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.user-meta { flex: 1; font-size: 0.85rem; }
+.user-meta p { color: var(--text-muted); }
+
+.switch-link, .follow-btn, .see-all {
+    background: none;
+    border: none;
+    color: #0095f6;
+    font-weight: bold;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+.sidebar-footer {
+    margin-top: 30px;
+    font-size: 0.7rem;
+    color: #c7c7c7;
+}
+
+/* =========================================
+   7. RESPONSIVENESS
+   ========================================= */
+@media (max-width: 1000px) {
+    .suggestions-sidebar {
+        display: none; /* Hide sidebar on small screens */
+    }
+    .dashboard-layout {
+        padding: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-center { gap: 15px; }
+    .nav-item { font-size: 1.2rem; }
+}
+
+/* Animation for Forgot Password steps */
+.step { animation: fadeIn 0.4s ease-in; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#userInitial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); /* Instagram Gradient */
+}
+
+.chat-layout {
+    display: flex;
+    max-width: 935px;
+    margin: 0 auto;
+    height: calc(100vh - 80px); /* Fill screen minus top nav */
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Sidebar */
+.chat-sidebar {
+    width: 350px;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-search-container {
+    padding: 20px;
+}
+
+.chat-search-container input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: #efefef;
+    outline: none;
+}
+
+.chat-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.tab-btn.active {
+    color: var(--text-main);
+    border-bottom: 1px solid var(--text-main);
+}
+
+.user-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.user-chat-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.user-chat-item:hover { background: #fafafa; }
+
+/* Chat Window */
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.icon-circle {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--text-main);
+    border-radius: 50%;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px;
+    transition: transform 0.2s;
+}
+
+.logout-btn:hover {
+    transform: scale(1.1);
+}
+
+.search-container {
+    position: relative;
+    padding: 10px;
+}
+
+#user-search {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #dbdbdb;
+}
+
+.results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 10;
+    right: 10;
+    background: white;
+    border: 1px solid #dbdbdb;
+    border-top: none;
+    z-index: 100;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-item:hover {
+    background-color: #fafafa;
+}
+
+.search-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.msg-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    font-size: 0.65rem;
+    opacity: 0.7;
+}
+
+.seen-indicator {
+    color: #0095f6; /* Blue for seen */
+    font-weight: bold;
+}
+
+.message.received .seen-indicator {
+    display: none; /* Don't show seen status to the person receiving the message */
+}
